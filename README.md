@@ -6,7 +6,7 @@
 
 ##### ================================================================================================================================================================================================================
 
-##### Chinese chess game written in pure C language, running under the console. AI uses min-max, alpha-beta pruning algorithm. Before this project, I write this game with C++14, but that version costs a lot of compile time on my own raspberrypi device, and a very bad thing is, for some reason, most machines I can use only support a very low version gcc, but I can't update the toolchains! so C++11/14 is not supported, so I think it's time to rewrite this game.
+##### Chinese chess game written in pure C language, running under the console. AI uses min-max, alpha-beta pruning algorithm. Before this project, I write this game with C++14, but that version costs a lot of compile time on my own raspberrypi device, and a very bad thing is, for some reason, most machines I can use only support a very low version gcc, but I can't update the toolchains! so C++11/14 is not supported, then this game is rewritten in C.
 
 ##### game is very simple, the upper is always AI, down is you. enter 'help' would give you a help page, as you can see below, and just enjoy it. network battle is not considered, maybe I would support that in the future, who knows ?
 
