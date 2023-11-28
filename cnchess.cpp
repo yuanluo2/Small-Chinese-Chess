@@ -523,6 +523,7 @@ void gen_possible_moves_for_general(const ChessBoard& cb, PossibleMoves& pm, int
 */
 PossibleMoves gen_possible_moves(const ChessBoard& cb, PieceSide side){
 	PossibleMoves pm;
+	pm.reserve(MAX_ONE_SIDE_POSSIBLE_MOVES_LEN);
 
     int32_t endRow = BOARD_ACTUAL_ROW_BEGIN + BOARD_ACTUAL_ROW_LEN;
     int32_t endCol = BOARD_ACTUAL_COL_BEGIN + BOARD_ACTUAL_COL_LEN;
