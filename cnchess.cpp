@@ -221,34 +221,6 @@ public:
         data[r][c] = p;
     }
 
-    void print_to_console(){
-        int splitLineIndex = BOARD_ACTUAL_ROW_BEGIN + (BOARD_ACTUAL_ROW_LEN / 2);
-        int endRow = BOARD_ACTUAL_ROW_BEGIN + BOARD_ACTUAL_ROW_LEN;
-        int endCol = BOARD_ACTUAL_COL_BEGIN + BOARD_ACTUAL_COL_LEN;
-        int n = BOARD_ACTUAL_ROW_LEN - 1;
-
-        std::cout << "\n    +-------------------+\n";
-
-        int r, c;
-        for (r = BOARD_ACTUAL_ROW_BEGIN; r < endRow; ++r) {
-            if (r == splitLineIndex){
-                std::cout << "    |===================|\n";
-                std::cout << "    |===================|\n";
-            }
-
-            std::cout << " " << n-- << "  | ";
-
-            for (c = BOARD_ACTUAL_COL_BEGIN; c < endCol; ++c){
-                std::cout << piece_get_char(get(r, c)) << " ";
-            }
-
-            std::cout << "|\n";
-        }
-
-        std::cout << "    +-------------------+\n";
-        std::cout << "\n      a b c d e f g h i\n\n";
-    }
-
     void move(const MoveNode& moveNode){
         Piece beginPiece = get(moveNode.beginRow, moveNode.beginCol);
         Piece endPiece = get(moveNode.endRow, moveNode.endCol);
@@ -800,6 +772,34 @@ PieceSide check_winner(const ChessBoard& cb){
     }
 }
 
+void print_board_to_console(const ChessBoard& cb){
+    int splitLineIndex = BOARD_ACTUAL_ROW_BEGIN + (BOARD_ACTUAL_ROW_LEN / 2);
+    int endRow = BOARD_ACTUAL_ROW_BEGIN + BOARD_ACTUAL_ROW_LEN;
+    int endCol = BOARD_ACTUAL_COL_BEGIN + BOARD_ACTUAL_COL_LEN;
+    int n = BOARD_ACTUAL_ROW_LEN - 1;
+
+    std::cout << "\n    +-------------------+\n";
+
+    int r, c;
+    for (r = BOARD_ACTUAL_ROW_BEGIN; r < endRow; ++r) {
+        if (r == splitLineIndex){
+            std::cout << "    |===================|\n";
+            std::cout << "    |===================|\n";
+        }
+
+        std::cout << " " << n-- << "  | ";
+
+        for (c = BOARD_ACTUAL_COL_BEGIN; c < endCol; ++c){
+            std::cout << piece_get_char(cb.get(r, c)) << " ";
+        }
+
+        std::cout << "|\n";
+    }
+
+    std::cout << "    +-------------------+\n";
+    std::cout << "\n      a b c d e f g h i\n\n";
+}
+
 void print_help_page(){
     std::cout << "\n=======================================\n";
     std::cout << "Help Page\n\n";
@@ -838,7 +838,7 @@ int main(){
     ChessBoard cb;
     std::string userInput;
 
-    cb.print_to_console();
+    print_board_to_console(cb);
 
     while (1){
         std::cout << "Your move: ";
@@ -846,12 +846,12 @@ int main(){
 
         if (userInput == "help"){
             print_help_page();
-            cb.print_to_console();
+            print_board_to_console(cb);
         }
         else if (userInput == "undo"){
             cb.undo();
             cb.undo();
-            cb.print_to_console();
+            print_board_to_console(cb);
         }
         else if (userInput == "quit"){
             return 0;
@@ -863,7 +863,7 @@ int main(){
             cb = ChessBoard{};
 
             std::cout << "New cnchess started.\n";
-            cb.print_to_console();
+            print_board_to_console(cb);
             continue;
         }
         else if (userInput == "advice"){
@@ -884,7 +884,7 @@ int main(){
 
                 if (check_rule(cb, userMove)){
                     cb.move(userMove);
-                    cb.print_to_console();
+                    print_board_to_console(cb);
 
                     if (check_winner(cb) == userSide){
                         std::cout << "Congratulations! You win!\n";
@@ -894,7 +894,7 @@ int main(){
                     MoveNode aiMove = gen_best_move(cb, aiSide, DEFAULT_AI_SEARCH_DEPTH);
                     std::string aiMoveStr = convert_move_to_str(aiMove);
                     cb.move(aiMove);
-                    cb.print_to_console();
+                    print_board_to_console(cb);
                     std::cout << "AI move: " << aiMoveStr
                              << ", piece is '" << piece_get_char(cb.get(aiMove.endRow, aiMove.endCol)) 
                              << "'.\n";
