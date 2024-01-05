@@ -841,7 +841,7 @@ int main(){
 
     print_board_to_console(cb);
 
-    while (1){
+    while (true){
         std::cout << "Your move: ";
         std::getline(std::cin, userInput);
 
